@@ -5,7 +5,7 @@ build_pci(){
 	if ! [ -d $PATH ]; then
 		return 0
 	fi
-	if [ $(find $PATH -name "*.zip" -printf . | wc -c) -eq "0" ]; then
+	if [ $(find $PATH -name "*.zip" -printf . | wc -c) -lt "1" ]; then
 		return 0
 	fi
 	#GITHUB_WORKSPACE=$(pwd)
