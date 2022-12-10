@@ -13,11 +13,6 @@ jobs:
           node-version: '16.10.0'
       - name: checkout ee
         run: git clone https://github.com/DIPFtba/ee4pci.git ./ee
-      - name: checkout pages
-        uses: actions/checkout@v3
-        with: 
-            ref: 'gh-pages'
-            path: 'public'
       - name: checkout items
         uses: actions/checkout@v3
         with: 
@@ -36,7 +31,7 @@ jobs:
       - name: run build script
         run: |
             export REPONAME="${GITHUB_REPOSITORY#*/}"
-            rm -r ./public/*
+            mkdir ./public
             chmod +x ./items/scripts/build.sh
             ./items/scripts/build.sh
       - name: Deploy EE to gh-pages
