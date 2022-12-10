@@ -15,7 +15,7 @@ if [ $(find ./items/items/* -maxdepth 0 -type d -printf . | wc -c) -ge "1" ]; th
 		cp -a ${IPATH}. ./ee/ee/public/items/
 		# npm install --prefix ./ee/ee
 		# export REPONAME="${GITHUB_REPOSITORY#*/}"
-		sed -i 's@/ee4pci/@./@' ./ee/ee/package.json
+		sed -i 's@"homepage": ".*"@"homepage": "./"@' ./ee/ee/package.json
 		cd ./ee/ee && npm run build
 		find ./build/ -name *.map -exec rm {} \;
 		cd $GITHUB_WORKSPACE
@@ -35,7 +35,7 @@ if [ $(find ./items/items/* -maxdepth 0 -type d -printf . | wc -c) -ge "1" ]; th
 		cd $GITHUB_WORKSPACE
 
 		###### generic pci & github pages
-		sed -i 's@/ee4pci/@/'"$REPONAME"'/'"$FOLDER"'/@' ./ee/ee/package.json
+		sed -i 's@"homepage": ".*"@"homepage": "/'"$REPONAME"'/'"$FOLDER"'/"@' ./ee/ee/package.json
 		(cd ./ee/ee && npm run build)
 		rm -r ./public/*
 		cp -a ./ee/ee/build/. ./public/${FOLDER}/
