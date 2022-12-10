@@ -1,7 +1,7 @@
 #!/bin/bash
 
 build_pci(){
-	export PATH = $1
+	export PATH=$1
 	if ! [ -d $PATH ]; then
 		return 0
 	fi
@@ -55,7 +55,7 @@ build_pci(){
 #GITHUB_REPOSITORY_OWNER="DIPFtba"
 
 if [ $(find ./items/items/* -maxdepth 0 -type d -printf . | wc -c) -ge "1" ]; then
-for i in $( ls -d items/*/ )
+for i in $( ls -d items/items/*/ )
 	do
 		build_pci $i
 	done
