@@ -44,7 +44,7 @@ jobs:
       - name: release pci packages
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "*.tar"
+          artifacts: $GITHUB_WORKSPACE/*.tar
           replacesArtifacts: true
           token: "${{ secrets.GITHUB_TOKEN }}"
           tag: "latest"
