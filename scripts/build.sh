@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 build_pci(){
 	export PATH=$1
