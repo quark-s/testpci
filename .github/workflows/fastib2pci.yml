@@ -45,7 +45,8 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: ${{github.workspace}}/*.tar
-          replacesArtifacts: false
+          replacesArtifacts: true
+          removeArtifacts: true
           token: "${{ secrets.GITHUB_TOKEN }}"
           tag: "latest"
           allowUpdates: true          
