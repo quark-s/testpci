@@ -10,7 +10,7 @@ if [ $(find ./items/items/* -maxdepth 0 -type d -printf . | wc -c) -ge "1" ]; th
 			return 0
 		fi
 		#GITHUB_WORKSPACE=$(pwd)
-		export FOLDER=${IPATH##*/}
+		(cd $IPATH && export FOLDER=${PWD##*/})
 		echo $FOLDER
 		echo $IPATH
 		rm -r ./ee/ee/public/items/*
