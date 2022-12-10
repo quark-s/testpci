@@ -11,6 +11,8 @@ if [ $(find ./items/items/* -maxdepth 0 -type d -printf . | wc -c) -ge "1" ]; th
 		fi
 		#GITHUB_WORKSPACE=$(pwd)
 		export FOLDER=${IPATH##*/}
+		echo $FOLDER
+		echo $IPATH
 		rm -r ./ee/ee/public/items/*
 		cp -a ${IPATH}. ./ee/ee/public/items/
 		# npm install --prefix ./ee/ee
