@@ -37,7 +37,6 @@ if [ $(find ./items/items/* -maxdepth 0 -type d -printf . | wc -c) -ge "1" ]; th
 		###### generic pci & github pages
 		sed -i 's@"homepage": ".*"@"homepage": "/'"$REPONAME"'/'"$FOLDER"'/"@' ./ee/ee/package.json
 		(cd ./ee/ee && npm run build)
-		rm -r ./public/*
 		cp -a ./ee/ee/build/. ./public/${FOLDER}/
 
 		cd ./pci_generic_tao/scripts/packer
