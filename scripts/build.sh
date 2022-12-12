@@ -39,6 +39,10 @@ build_test(){
 		cp -a ./ee/ee/build/. ./public/${FOLDER}/
 		npx playwright screenshot --wait-for-timeout 2000 --viewport-size 1024,768 "http://127.0.0.1:8080/${REPONAME}/${FOLDER}" ./public/${FOLDER}.png
 		cp ${FOLDER}.png ./public/
+		
+		if [ $i -gt "0" ]; then
+			echo -n ',' >> data.json
+		fi		
 		echo -n '{"url": "https://'"${GITHUB_REPOSITORY_OWNER}"'.github.io/'"${REPONAME}"'/'"${FOLDER}"'","screenshot": "./'"${FOLDER}"'.png","title": "'"${FOLDER}"'"}' >> data.json
 
 		cd ./pci_generic_tao/scripts/packer
@@ -67,3 +71,4 @@ if [ $(find ./items/items/* -maxdepth 0 -type d -printf . | wc -c) -ge "1" ]; th
 fi
 echo -n ']}' >> data.json
 npx ejs ./items/scripts/index.ejs -f ./data.json -o ./public/index.html
+cp ./data.json ./public/
