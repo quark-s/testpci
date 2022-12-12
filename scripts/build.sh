@@ -1,6 +1,6 @@
 #!/bin/sh
 
-live-server --open="./public/" --proxy=/${REPONAME}:http://127.0.0.1:8080/public --no-browser
+live-server --open="./public/" --proxy=/${REPONAME}:http://127.0.0.1:8080/public --no-browser &
 if [ $(find ./items/items/* -maxdepth 0 -type d -printf . | wc -c) -ge "1" ]; then
 	for IPATH in $( ls -d items/items/*/ )
 	do
