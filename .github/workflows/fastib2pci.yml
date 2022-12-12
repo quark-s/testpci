@@ -32,6 +32,9 @@ jobs:
         run: |
             export REPONAME="${GITHUB_REPOSITORY#*/}"
             mkdir ./public
+            npm install -D @playwright/test
+            npx playwright install --with-deps
+            npm install -g live-server
             chmod +x ./items/scripts/build.sh
             ./items/scripts/build.sh
       - name: Deploy EE to gh-pages

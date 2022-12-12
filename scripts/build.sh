@@ -1,5 +1,6 @@
 #!/bin/sh
 
+live-server --open="./public/" --proxy=/${REPONAME}:http://127.0.0.1:8080/public --no-browser
 if [ $(find ./items/items/* -maxdepth 0 -type d -printf . | wc -c) -ge "1" ]; then
 	for IPATH in $( ls -d items/items/*/ )
 	do
@@ -40,6 +41,8 @@ if [ $(find ./items/items/* -maxdepth 0 -type d -printf . | wc -c) -ge "1" ]; th
 		sed -i 's@"homepage": ".*"@"homepage": "/'"$REPONAME"'/'"$FOLDER"'/"@' ./ee/ee/package.json
 		(cd ./ee/ee && npm run build)
 		cp -a ./ee/ee/build/. ./public/${FOLDER}/
+		npx playwright screenshot --wait-for-timeout 2000 --viewport-size 1024,768 "http://127.0.0.1:8080/${REPONAME}/${FOLDER}" ./public/${FOLDER}.png
+		cp ${FOLDER}.png ./public/
 
 		cd ./pci_generic_tao/scripts/packer
 		npm i           
