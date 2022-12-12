@@ -1,9 +1,5 @@
 #!/bin/sh
-
-live-server --open="./public/" --proxy=/${REPONAME}:http://127.0.0.1:8080/public --no-browser
-if [ $(find ./items/items/* -maxdepth 0 -type d -printf . | wc -c) -ge "1" ]; then
-	for IPATH in $( ls -d items/items/*/ )
-	do
+build_test(){	
 		if ! [ -d $IPATH ]; then
 			return 0
 		fi
@@ -43,6 +39,7 @@ if [ $(find ./items/items/* -maxdepth 0 -type d -printf . | wc -c) -ge "1" ]; th
 		cp -a ./ee/ee/build/. ./public/${FOLDER}/
 		npx playwright screenshot --wait-for-timeout 2000 --viewport-size 1024,768 "http://127.0.0.1:8080/${REPONAME}/${FOLDER}" ./public/${FOLDER}.png
 		cp ${FOLDER}.png ./public/
+		echo -n '{"url": "https://'"${GITHUB_REPOSITORY_OWNER}"'.github.io/'"${REPONAME}"'/'"${FOLDER}"'","screenshot": "./'"${FOLDER}"'.png","title": "'"${FOLDER}"'"}' >> data.json
 
 		cd ./pci_generic_tao/scripts/packer
 		npm i           
@@ -54,5 +51,19 @@ if [ $(find ./items/items/* -maxdepth 0 -type d -printf . | wc -c) -ge "1" ]; th
 		node ./index.js -u "https://${GITHUB_REPOSITORY_OWNER}.github.io/${REPONAME}/${FOLDER}" -i "${GITHUB_WORKSPACE}/${PATH}" -l "${REPONAME}_${FOLDER}_generic_ims_$(date '+%D-%H:%M')" -o "$GITHUB_WORKSPACE"
 		cd $GITHUB_WORKSPACE 
 		tar -cvf ${FOLDER}.tar *.zip
+		export i=$((i+1))
+		return 1
+}
+
+live-server --open="./public/" --proxy=/${REPONAME}:http://127.0.0.1:8080/public --no-browser
+
+export i=0
+echo -n '{"tests": [' > data.json
+if [ $(find ./items/items/* -maxdepth 0 -type d -printf . | wc -c) -ge "1" ]; then
+	for IPATH in $( ls -d items/items/*/ )
+	do
+		build_test
 	done
 fi
+echo -n ']}' >> data.json
+npx ejs ./items/scripts/index.ejs -f ./data.json -o ./public/index.html

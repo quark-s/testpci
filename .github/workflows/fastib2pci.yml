@@ -35,6 +35,7 @@ jobs:
             npm install -D @playwright/test
             npx playwright install --with-deps
             npm install -g live-server
+            npm install ejs
             chmod +x ./items/scripts/build.sh
             ./items/scripts/build.sh
       - name: Deploy EE to gh-pages
