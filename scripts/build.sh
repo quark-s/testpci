@@ -55,7 +55,7 @@ build_test(){
 		return 1
 }
 
-live-server --open="./public/" --proxy=/${REPONAME}:http://127.0.0.1:8080/public --no-browser
+live-server --open="./public/" --proxy=/${REPONAME}:http://127.0.0.1:8080/public --no-browser &
 
 export i=0
 echo -n '{"tests": [' > data.json
